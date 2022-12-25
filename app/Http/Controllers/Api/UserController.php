@@ -86,7 +86,7 @@ class UserController extends BaseController
 
         try {
 
-            $result=User::where('id',$id)->with('roles')->get();
+            $result=User::where('id',$id)->with('roles')->first();
             return $this->sendResponse($result, 'Kullanıcı Detayı');
 
 

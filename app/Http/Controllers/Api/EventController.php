@@ -93,7 +93,7 @@ class EventController extends BaseController
                 ->join('users', 'events.user_id', '=', 'users.id')
                 ->select('events.*','users.name as user_name','services.name as servis_name')
                 ->where('events.id',Auth::user()->id)
-                ->get();
+                ->first();
             return $this->sendResponse($result, 'Randevu Düzenle');
 
 

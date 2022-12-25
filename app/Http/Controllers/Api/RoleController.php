@@ -70,7 +70,7 @@ class RoleController extends BaseController
 
             $result=Role::where('id', $id)
                 ->with('permissions')
-                ->get();
+                ->first();
             return $this->sendResponse($result, 'Role Detayı');
 
 

@@ -73,7 +73,7 @@ class UserScheduleController extends BaseController
     {
         try {
 
-            $result=UserSchedule::where('id',$id)->get();
+            $result=UserSchedule::where('id',$id)->first();
 
 
             return $this->sendResponse($result, 'User Schedule Detayı');

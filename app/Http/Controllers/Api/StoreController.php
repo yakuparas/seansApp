@@ -105,7 +105,7 @@ class StoreController extends BaseController
     {
         try {
 
-            $result=Store::query()->where('id',$id)->get();
+            $result=Store::query()->where('id',$id)->fisrt();
             return $this->sendResponse($result, 'Şube Detayı');
 
 

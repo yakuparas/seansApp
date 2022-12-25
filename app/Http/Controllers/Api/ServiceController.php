@@ -40,6 +40,7 @@ class ServiceController extends BaseController
      */
     public function store(Request $request)
     {
+        
         DB::beginTransaction();
 
         try {
@@ -52,6 +53,11 @@ class ServiceController extends BaseController
           $services->price=$request->price;
           $services->duration_time=$request->duration_time;
           $services->break_time=$request->break_time;
+          if($request->hasFile('image')) {
+            $logo = time().'.'.$request->image->getClientOriginalExtension();
+            $request->image->move(public_path('image'), $logo);
+        }
+          $services->image='image/'.$logo;
           $services->save();
 
 
@@ -74,7 +80,7 @@ class ServiceController extends BaseController
     {
         try {
 
-            $result=Service::query()->where('id',$id)->get();
+            $result=Service::query()->where('id',$id)->first();
             return $this->sendResponse($result, 'Hizmet Detayı');
 
 

@@ -137,7 +137,7 @@ class CompanyController extends BaseController
 
         try {
 
-                $result=Company::query()->where('id',$id)->get();
+                $result=Company::query()->where('id',$id)->first();
                 return $this->sendResponse($result, 'Firma Detayı');
 
 

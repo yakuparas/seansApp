@@ -55,7 +55,7 @@ class CustomerController extends BaseController
     {
         try {
 
-            $result=User::where('id',$id)->get();
+            $result=User::where3('id',$id)->first();
             return $this->sendResponse($result, 'Müşteri Detayı');
 
 
