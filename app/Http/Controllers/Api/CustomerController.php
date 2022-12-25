@@ -153,4 +153,19 @@ class CustomerController extends BaseController
 
         }
     }
+
+    public function getProfile()
+    {
+        try {
+
+            $result=User::where('id',Auth::user()->id)->first();
+            return $this->sendResponse($result, 'Profil Bilgileri');
+
+
+        } catch (\Throwable $e)
+        {
+            return $this->sendError('Hata',['error'=>$e->getMessage()]);
+
+        }
+    }
 }

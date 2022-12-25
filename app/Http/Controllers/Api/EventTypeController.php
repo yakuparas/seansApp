@@ -70,8 +70,8 @@ class EventTypeController extends BaseController
     {
         try {
 
-            $result=EventType::all();
-            //$result=EventType::query()->where('id',$id)->get();
+           // $result=EventType::all();
+            $result=EventType::query()->where('id',$id)->get();
             return $this->sendResponse($result, 'Event Type Detayı');
 
 

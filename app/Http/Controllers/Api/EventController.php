@@ -17,6 +17,7 @@ class EventController extends BaseController
      */
     public function index()
     {
+
         try {
 
             $result = DB::table('events')
@@ -44,6 +45,8 @@ class EventController extends BaseController
     public function store(Request $request)
     {
 
+
+
         DB::beginTransaction();
         try {
             $event=new Event();
@@ -51,7 +54,16 @@ class EventController extends BaseController
             $event->service_id=$request->service_id;
             $event->event_type_id=$request->event_type_id;
             $event->user_id=$request->user_id;
-            $event->customer_id=Auth::user()->id;
+
+            if (isset($request->customer_id))
+            {
+                $event->customer_id=$request->customer_id;
+            }
+            else
+            {
+                $event->customer_id=Auth::user()->id;
+            }
+
             $event->payment_id=$request->payment_id;
             $event->event_name=$request->event_name;
             $event->event_start=$request->event_start;
@@ -72,7 +84,7 @@ class EventController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
         try {
 
@@ -80,7 +92,7 @@ class EventController extends BaseController
                 ->join('services', 'events.service_id', '=', 'services.id')
                 ->join('users', 'events.user_id', '=', 'users.id')
                 ->select('events.*','users.name as user_name','services.name as servis_name')
-                ->where('events.id',$id)
+                ->where('events.id',Auth::user()->id)
                 ->get();
             return $this->sendResponse($result, 'Randevu Düzenle');
 
@@ -130,10 +142,10 @@ class EventController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
         try {
-            $del=Event::find($id)->delete();
+            $del=Event::find(Auth::user()->id)->delete();
             return $this->sendResponse($del, 'Randevu Silindi');
 
 
