@@ -21,6 +21,7 @@ class LoginController extends BaseController
         if (auth()->attempt($data)) {
 
                 $user = Auth::user();
+                $success['id']=$user->id;
                 $success['name']=$user->name;
                 $success['email']=$user->email;
                 $success['userType']=UserType::getKey((int)$user->type);

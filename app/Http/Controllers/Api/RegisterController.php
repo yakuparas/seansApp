@@ -38,6 +38,10 @@ class RegisterController extends BaseController
             ];
             $userN=User::find($user->id);
             Notification::send($userN,new CustomerRegisterNotifications($userX));
+            $success['name']=$request->name;
+            $success['email']=$request->email;
+            return $this->sendResponse($success, 'Kullanıcı Kaydı Oluşturuldu.');
+
         }
 
     }

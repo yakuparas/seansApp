@@ -33,17 +33,17 @@ use Illuminate\Support\Facades\Route;
     Route::post('/updatePassword',[ForgotPasswordController::class, 'updatePassword'])->name('sendcode');
 
 
-Route::get('country', function () {
-         return \App\Models\Country::all();
-    });
+    Route::get('country', function () {
+             return \App\Models\Country::all();
+        });
 
-    Route::get('city/{id}', function ($id) {
-        return \App\Models\Citie::where('state_id',$id)->get();
-    });
+        Route::get('city/{id}', function ($id) {
+            return \App\Models\Citie::where('state_id',$id)->get();
+        });
 
-    Route::get('state/{id}', function ($id) {
-        return \App\Models\State::where('country_id',$id)->get();
-    });
+        Route::get('state/{id}', function ($id) {
+            return \App\Models\State::where('country_id',$id)->get();
+        });
 
 
     Route::middleware('auth:api')->group(function(){
@@ -87,7 +87,7 @@ Route::get('country', function () {
 
             Route::controller(RoleController::class)->prefix('store/role')->group(function () {
                 Route::get('getPermissions','getPermission')->name('getPermissions');
-                Route::get('getRole','index')->name('getRole');
+                Route::get('getRole','index')->name('role.index');
                 Route::post('addRole','store')->name('role.store');
                 Route::get('getRole/{id}','show')->name('role.show');
                 Route::post('updateRole/{id}','update')->name('role.update');
@@ -109,8 +109,6 @@ Route::get('country', function () {
 
 
         });
-
-
         Route::controller(UserScheduleController::class)->group(function (){
             Route::get('getUserSchedulers/{id}','index')->name('userSchedule.list');
             Route::post('addUserSchedule','store')->name('userSchedule.store');
@@ -120,17 +118,20 @@ Route::get('country', function () {
 
         });
 
+        Route::prefix('customer')->group(function (){
 
-        Route::controller(EventController::class)->prefix('customer')->group(function (){
-            Route::get('getEvents/{id}','index')->name('customerEventList.list');
-            Route::post('addEvent','store')->name('customerAddEvent.store');
-            Route::get('getEvent/{id}','show')->name('customerEvent.show');
-            Route::post('destroyEvent/{id}','destroy')->name('customerEvent.destroy');
+            Route::controller(EventController::class)->group(function (){
+                Route::get('getEvents','index')->name('customerEventList.list');
+                Route::post('addEvent','store')->name('customerAddEvent.store');
+                Route::get('getEvent','show')->name('customerEvent.show');
+                Route::post('destroyEvent','destroy')->name('customerEvent.destroy');
+            });
+
+            Route::get('/getProfile',[CustomerController::class, 'getProfile'])->name('customer.profile');
+
+
+
         });
-
-
-
-
         Route::controller(CustomerController::class)->group(function (){
             Route::get('getCustomers/{id}','index')->name('customer.list');
             Route::get('getCustomer/{id}','show')->name('customer.show');
@@ -138,8 +139,6 @@ Route::get('country', function () {
             Route::post('changeCustomerStatus/{id}','status')->name('customerStatus.status');
             Route::post('destroyCustomer/{id}','destroy')->name('customer.destroy');
         });
-
-
     });
 
 
