@@ -146,6 +146,8 @@ class CompanyController extends BaseController
             return $this->sendError('Hata',['error'=>$e->getMessage()]);
 
         }
+
+        
     }
 
     /**
